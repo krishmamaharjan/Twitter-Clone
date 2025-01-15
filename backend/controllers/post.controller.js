@@ -145,10 +145,11 @@ export const likeUnlikePost = async(req,res) =>
     }
 };
 
-export const getAllPost = async(res, req) =>
+export const getAllPost = async(req,res) =>
 {
     try{
-        const posts = await Post.find().sort({ createsAt: -1})
+        const posts = await Post.find()
+        .sort({ createsAt: -1})
         .populate({
             path: "user",
             select:"password",
@@ -164,7 +165,7 @@ export const getAllPost = async(res, req) =>
             return res.status(200).json([])
         }
 
-        res.status(200).json({message: "posts retrieved successfuly"});
+        res.status(200).json({posts});
     }catch(error)
     {
         console.log("error in getAllPost controller: ",error);
